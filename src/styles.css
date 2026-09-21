@@ -119,6 +119,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .done-card .ico{width:56px;height:56px;margin:0 auto 16px;color:var(--mint)}
 .done-card h2{font-size:24px;margin-bottom:8px}
 .done-card p{color:var(--muted);max-width:26em;margin:0 auto 24px}
+.org-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:28px;font-weight:700;letter-spacing:.08em;background:rgba(255,255,255,.1);border:1px dashed var(--line);border-radius:10px;padding:14px 20px;margin:0 auto 24px;max-width:fit-content}
 
 /* ---------- App shell ---------- */
 .shell{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);min-height:100dvh}

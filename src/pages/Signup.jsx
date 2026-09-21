@@ -5,7 +5,6 @@ import Icon from '../components/Icon.jsx';
 import { FormField, PasswordField } from '../components/FormField.jsx';
 import { useApp } from '../context/AppContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
-import { ORG_CODES } from '../data/sampleData.js';
 import { EMAIL, focusFirstInvalid } from '../utils.js';
 
 const Stepper = ({ n }) => (
@@ -19,7 +18,7 @@ const Stepper = ({ n }) => (
 );
 
 export default function Signup() {
-  const { setUser, createOrganization } = useApp();
+  const { setUser, createOrganization, orgCodes } = useApp();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [path, setPath] = useState('');
@@ -31,6 +30,7 @@ export default function Signup() {
   const [codeError, setCodeError] = useState('');
   const [create, setCreate] = useState({ oname: '', otype: '', odom: '', odesc: '' });
   const [createErrors, setCreateErrors] = useState({});
+  const [createdCode, setCreatedCode] = useState('');
 
   const stepNumber = typeof step === 'number' ? step : 3;
 
@@ -67,15 +67,16 @@ export default function Signup() {
     };
     setCreateErrors(nextErrors);
     if (Object.values(nextErrors).some(Boolean)) return setTimeout(focusFirstInvalid);
-    createOrganization(create.oname);
+    const code = createOrganization(create.oname);
     setUser({ name: `${personal.fn} ${personal.ln}`, email: personal.em, role: 'Owner' });
-    navigate('/app/overview');
+    setCreatedCode(code);
+    setStep('created');
   }
 
   function findOrganization() {
-    // TODO(backend): GET /organizations/lookup?code=... (replaces ORG_CODES).
+    // TODO(backend): GET /organizations/lookup?code=...
     const code = orgCode.toUpperCase();
-    const name = ORG_CODES[code];
+    const name = orgCodes[code];
     if (!code) { setCodeError('Enter the organization code your owner shared with you.'); return; }
     if (!name) { setCodeError('No organization matches that code. Check it with the organization owner and try again.'); setFoundOrg(null); return; }
     setCodeError('');
@@ -104,6 +105,25 @@ export default function Signup() {
               <h2 id="step-title" tabIndex={-1}>Join request sent</h2>
               <p>An owner of {foundOrg} needs to approve your request. You can sign in once it’s approved.</p>
               <Link className="btn" to="/signin">Back to sign in</Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (step === 'created') {
+    return (
+      <main className="auth">
+        <Link className="corner" to="/" aria-label="Security Compliance System home"><Logo /></Link>
+        <section className="auth__col">
+          <div className="panel">
+            <div className="done-card">
+              <Icon name="check" size={56} />
+              <h2 id="step-title" tabIndex={-1}>Organization created</h2>
+              <p>Share this code with your developers and security testers so they can request to join.</p>
+              <p className="org-code" aria-label={`Organization code ${createdCode.split('').join(' ')}`}>{createdCode}</p>
+              <Link className="btn" to="/app/overview">Continue to dashboard</Link>
             </div>
           </div>
         </section>
