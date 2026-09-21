@@ -1,0 +1,59 @@
+import { useState } from 'react';
+import Icon from '../components/Icon.jsx';
+import { statusChip } from '../components/chips.jsx';
+import { useApp } from '../context/AppContext.jsx';
+import { useOpenAddAppDialog } from './AppShell.jsx';
+
+const STATUSES = ['All', 'Authorized', 'Pending'];
+
+export default function Applications() {
+  const { apps } = useApp();
+  const openAddApp = useOpenAddAppDialog();
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState('All');
+
+  const q = query.toLowerCase();
+  const list = apps.filter(x =>
+    (status === 'All' || x.status === status) &&
+    (!q || x.name.toLowerCase().includes(q) || x.type.toLowerCase().includes(q))
+  );
+
+  return (
+    <>
+      <div className="toolbar">
+        <div className="search">
+          <label className="sr" htmlFor="appq">Search applications</label>
+          <Icon name="search" size={20} />
+          <input id="appq" type="search" placeholder="Search applications" value={query} onChange={e => setQuery(e.target.value)} autoComplete="off" />
+        </div>
+        <label className="sr" htmlFor="appst">Filter by status</label>
+        <select id="appst" className="sel" value={status} onChange={e => setStatus(e.target.value)}>
+          {STATUSES.map(s => <option key={s} value={s}>{s === 'All' ? 'All statuses' : s}</option>)}
+        </select>
+      </div>
+      <div className="grid-apps">
+        {list.map(x => (
+          <article className="card app" key={x.name}>
+            <div className="app__top"><h3>{x.name}</h3>{statusChip(x.status)}</div>
+            <p className="muted">{x.type}</p>
+            {x.score != null ? (
+              <>
+                <div className="score">
+                  <div><span>Security score</span><b>{x.score}/100</b></div>
+                  <div className="bar" role="img" aria-label={`Score ${x.score} out of 100`}><i style={{ width: `${x.score}%` }} /></div>
+                </div>
+                <p className="meta">Last assessed {x.assessed}</p>
+              </>
+            ) : (
+              <p className="meta" style={{ marginTop: 'auto' }}>Not assessed yet. Waiting for authorization.</p>
+            )}
+          </article>
+        ))}
+        <button type="button" className="card app add" onClick={openAddApp}>
+          <Icon name="plus" size={36} />
+          <span>Add application</span>
+        </button>
+      </div>
+    </>
+  );
+}
