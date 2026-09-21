@@ -5,7 +5,7 @@ import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
-const STATUS_TONE = { Completed: 'ok', Running: 'warn', Failed: 'crit', Cancelled: 'info' };
+const STATUS_TONE = { Completed: 'ok', Running: 'warn', Failed: 'danger', Cancelled: 'info' };
 
 export default function AssessmentMonitoring() {
   const { assessments, apps, cancelScan } = useApp();

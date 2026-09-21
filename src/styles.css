@@ -14,8 +14,11 @@
   --rule:#e3e3ef;
   --line:rgba(255,255,255,.35);
   --muted:rgba(255,255,255,.74);
-  --crit:#b3001b; --high:#c2410c; --med:#a16207; --low:#0369a1; --ok:#047857;
-  --shadow:-5px 5px 5px 2px rgba(0,0,0,.35);
+  /* Severity scale (findings): CVD-validated as a 4-slot categorical set — do not reuse elsewhere */
+  --crit:#9d174d; --high:#ea580c; --med:#1d4ed8; --low:#0891b2;
+  /* Generic status tones (independent of severity — chips, danger buttons, health) */
+  --ok:#047857; --warn:#a16207; --info:#0369a1; --danger:#b3001b;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 24px -10px rgba(0,0,0,.5);
   --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   --sidebar:280px;
   --safe-t:env(safe-area-inset-top,0px);
@@ -154,22 +157,38 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
 .stat{text-align:center;min-height:161px;display:flex;flex-direction:column;justify-content:space-between;padding:16px 12px 24px}
 .stat p{font-size:40px;font-weight:600;line-height:1}
+.stat--meter{align-items:center}
 .lower{display:grid;grid-template-columns:2.2fr 1fr 1.5fr;gap:24px;margin-top:24px}
 .lower .card{min-height:262px}
 .lower h2{margin-bottom:14px}
+.lower--admin{grid-template-columns:minmax(0,520px)}
 .mini li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--rule);font-size:14px}
 .mini li:first-child{border-top:0}
 .mini b{font-weight:600;display:block}
 .big{font-size:56px;font-weight:600;line-height:1;margin-top:24px}
 .card a.more{display:inline-block;margin-top:20px;color:var(--primary);font-weight:600}
-.sev li{display:grid;grid-template-columns:72px 1fr 24px;align-items:center;gap:12px;padding:8px 0;font-size:14px}
-.sev b{text-align:right}
 .bar{height:8px;border-radius:99px;background:#e6e6f2;overflow:hidden}
 .bar>i{display:block;height:100%;border-radius:99px;background:var(--primary)}
-.sev .bar>i.crit{background:var(--crit)}.sev .bar>i.high{background:var(--high)}.sev .bar>i.med{background:var(--med)}.sev .bar>i.low{background:var(--low)}
+
+/* ---------- Category bar chart (findings by severity, apps by status) ---------- */
+.catbars{display:flex;flex-direction:column;gap:12px}
+.catbars__row{display:grid;grid-template-columns:80px 1fr 26px;align-items:center;gap:12px}
+.catbars__label{font-size:14px;color:var(--ink-2)}
+.catbars__track{position:relative;height:12px;border-radius:7px;background:#eceef5;overflow:hidden}
+.catbars__fill{display:block;height:100%;border-radius:0 4px 4px 0;transition:filter .12s ease,width .4s ease}
+.catbars__track:hover .catbars__fill,.catbars__track:focus-visible .catbars__fill{filter:brightness(1.18)}
+.catbars__track:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.catbars__value{font-weight:700;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+/* ---------- Score meter (radial) ---------- */
+.scoremeter{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.scoremeter svg{display:block}
+.scoremeter__value{position:absolute;font-size:22px;font-weight:700;color:var(--ink)}
+.scoremeter__value small{display:block;font-size:11px;font-weight:600;color:var(--ink-2);text-align:center;margin-top:-2px}
+.scoremeter--empty{display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px dashed var(--rule);color:var(--ink-2);font-weight:600}
 
 .chip{display:inline-flex;align-items:center;padding:1px 10px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid currentColor;white-space:nowrap}
-.chip--ok{color:var(--ok)}.chip--warn{color:var(--med)}.chip--info{color:var(--low)}
+.chip--ok{color:var(--ok)}.chip--warn{color:var(--warn)}.chip--info{color:var(--info)}.chip--danger{color:var(--danger)}
 .chip--crit{color:var(--crit)}.chip--high{color:var(--high)}.chip--med{color:var(--med)}.chip--low{color:var(--low)}
 
 .toolbar{display:flex;gap:16px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
@@ -227,7 +246,7 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
 .toast.show{opacity:1}
 
 /* ---------- Buttons: danger + card-as-link ---------- */
-.btn--danger{background:var(--crit);border-color:var(--crit)}
+.btn--danger{background:var(--danger);border-color:var(--danger)}
 .btn--danger:hover{background:#8f0016;border-color:#8f0016}
 .app--link{text-decoration:none;color:inherit;cursor:pointer}
 .app--link:hover{box-shadow:0 0 0 2px var(--accent),var(--shadow)}
@@ -271,8 +290,8 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
 .hero-kpi h2{font-size:18px}
 .hero-kpi__num{font-size:64px;font-weight:700;line-height:1;color:var(--primary)}
 .hero-kpi__num--ok{color:var(--ok)}
-.hero-kpi__num--warn{color:var(--med)}
-.hero-kpi__num--crit{color:var(--crit)}
+.hero-kpi__num--warn{color:var(--warn)}
+.hero-kpi__num--danger{color:var(--danger)}
 .hero-kpi--health{align-items:flex-start}
 
 /* ---------- Responsive ---------- */
