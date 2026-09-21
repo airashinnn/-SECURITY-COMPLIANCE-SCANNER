@@ -24,7 +24,7 @@ export const STANDARD_ONLY_CHECKS = [
 export const FULL_ONLY_CHECKS = [
   { id: 'AU-03', label: 'Rate Limiting', category: 'Authentication' },
   { id: 'AC-02', label: 'Unauthorized Resource Access', category: 'Access Control' },
-  { id: 'IN-01', label: 'Reflected XSS', category: 'Injection' },
+  { id: 'N-01', label: 'Reflected XSS', category: 'Injection' },
   { id: 'IN-02', label: 'Error-Based SQL Injection', category: 'Injection' }
 ];
 

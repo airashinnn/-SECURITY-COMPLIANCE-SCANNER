@@ -21,10 +21,21 @@ const store = {
 const idCounters = {};
 const nextId = prefix => `${prefix}-${(idCounters[prefix] = (idCounters[prefix] || 5000) + 1)}`;
 
+function generateOrgCode(name, existingCodes) {
+  const base = (name.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(0, 6) || 'ORG');
+  let suffix = '';
+  let n = 2;
+  while (existingCodes[`${base}${suffix}-2026`]) {
+    suffix = String(n++);
+  }
+  return `${base}${suffix}-2026`;
+}
+
 export function AppProvider({ children }) {
   const [user, setUserState] = useState(() => store.get());
   const [orgs, setOrgs] = useState(INITIAL_ORGS);
   const [org, setOrg] = useState(INITIAL_ORGS[0]);
+  const [orgCodes, setOrgCodes] = useState(ORG_CODES);
   const [apps, setApps] = useState(INITIAL_APPS);
   const [assessments, setAssessments] = useState(INITIAL_ASSESSMENTS);
   const [findings, setFindings] = useState(INITIAL_FINDINGS);
@@ -144,8 +155,11 @@ export function AppProvider({ children }) {
   };
 
   const createOrganization = name => {
+    const code = generateOrgCode(name, orgCodes);
     setOrgs(prev => [name, ...prev]);
     setOrg(name);
+    setOrgCodes(prev => ({ ...prev, [code]: name }));
+    return code;
   };
 
   // --- Admin: organizations -------------------------------------------
@@ -174,16 +188,15 @@ export function AppProvider({ children }) {
 
   const value = useMemo(() => ({
     user, setUser, signOut, isAdmin,
-    orgs, org, setOrg, createOrganization,
+    orgs, org, setOrg, createOrganization, orgCodes,
     apps, addApp, approveApplication, rejectApplication, revokeAuthorization,
     assessments, startScan, completeScan, cancelScan,
     findings, updateFindingStatus,
     members, pending, approveMember, declineMember, removeMember,
     organizations, users, auditLog, systemHealth,
-    suspendOrganization, reactivateOrganization, suspendUserAccount, reactivateUserAccount, logAudit,
-    ORG_CODES
+    suspendOrganization, reactivateOrganization, suspendUserAccount, reactivateUserAccount, logAudit
   }), [
-    user, isAdmin, orgs, org, apps, assessments, findings, members, pending,
+    user, isAdmin, orgs, org, orgCodes, apps, assessments, findings, members, pending,
     organizations, users, auditLog, systemHealth
   ]);
 

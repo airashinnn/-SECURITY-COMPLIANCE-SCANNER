@@ -1,7 +1,7 @@
 import { chip } from '../../components/chips.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 
-const STATUS_TONE = { Healthy: 'ok', Degraded: 'warn', Down: 'crit' };
+const STATUS_TONE = { Healthy: 'ok', Degraded: 'warn', Down: 'danger' };
 
 export default function SystemHealth() {
   const { systemHealth, assessments } = useApp();

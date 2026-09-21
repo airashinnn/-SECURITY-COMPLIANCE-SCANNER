@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { sevKey, statusChip, chip } from '../components/chips.jsx';
+import { chip } from '../components/chips.jsx';
+import CategoryBars from '../components/CategoryBars.jsx';
+import ScoreMeter from '../components/ScoreMeter.jsx';
 
-const SEVERITIES = ['Critical', 'High', 'Medium', 'Low'];
+const SEVERITIES = [
+  { label: 'Critical', varName: '--crit' },
+  { label: 'High', varName: '--high' },
+  { label: 'Medium', varName: '--med' },
+  { label: 'Low', varName: '--low' }
+];
 
 export default function Overview() {
   const { apps: allApps, findings: allFindings, org } = useApp();
@@ -12,23 +19,27 @@ export default function Overview() {
   const auth = apps.filter(x => x.status === 'Authorized').length;
   const pend = apps.filter(x => x.status === 'Pending').length;
   const scored = apps.filter(x => x.score != null);
-  const score = scored.length ? Math.round(scored.reduce((s, x) => s + x.score, 0) / scored.length) + '/100' : '—';
+  const avgScore = scored.length ? Math.round(scored.reduce((s, x) => s + x.score, 0) / scored.length) : null;
   const open = findings.filter(f => f.status !== 'Resolved');
   const recent = apps.filter(x => x.assessed).slice(0, 3);
-  const sevs = SEVERITIES.map(s => [s, open.filter(f => f.sev === s).length]);
-  const max = Math.max(1, ...sevs.map(x => x[1]));
+  const severityData = SEVERITIES.map(s => ({ ...s, value: open.filter(f => f.sev === s.label).length }));
 
-  const Stat = ({ label, value }) => (
-    <div className="card stat"><h2>{label}</h2><p>{value}</p></div>
+  const Stat = ({ label, value, accent }) => (
+    <div className="card stat" style={accent ? { borderTop: `3px solid var(${accent})` } : undefined}>
+      <h2>{label}</h2><p>{value}</p>
+    </div>
   );
 
   return (
     <>
       <div className="stats">
         <Stat label="Applications" value={apps.length} />
-        <Stat label="Authorized applications" value={auth} />
-        <Stat label="Pending applications" value={pend} />
-        <Stat label="Security Score" value={score} />
+        <Stat label="Authorized applications" value={auth} accent="--ok" />
+        <Stat label="Pending applications" value={pend} accent="--warn" />
+        <div className="card stat stat--meter">
+          <h2>Security Score</h2>
+          <ScoreMeter score={avgScore} size={88} label="average security score" />
+        </div>
       </div>
       <div className="lower">
         <section className="card" aria-labelledby="h-recent">
@@ -52,15 +63,9 @@ export default function Overview() {
         </section>
         <section className="card" aria-labelledby="h-sev">
           <h2 id="h-sev">Findings by Severity</h2>
-          <ul className="sev" style={{ marginTop: 8 }}>
-            {sevs.map(([s, c]) => (
-              <li key={s}>
-                <span>{s}</span>
-                <div className="bar" aria-hidden="true"><i className={sevKey(s)} style={{ width: `${(c / max) * 100}%` }} /></div>
-                <b>{c}</b>
-              </li>
-            ))}
-          </ul>
+          <div style={{ marginTop: 16 }}>
+            <CategoryBars data={severityData} />
+          </div>
         </section>
       </div>
     </>
