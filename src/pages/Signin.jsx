@@ -6,12 +6,19 @@ import { useApp } from '../context/AppContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import { EMAIL, focusFirstInvalid, nameFromEmail } from '../utils.js';
 
+const ROLES = [
+  { id: 'Owner', label: 'Organization owner' },
+  { id: 'Developer', label: 'Developer / security tester' },
+  { id: 'Admin', label: 'System administrator' }
+];
+
 export default function Signin() {
   const { setUser } = useApp();
   const toast = useToast();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('Owner');
   const [errors, setErrors] = useState({});
 
   function handleSubmit(e) {
@@ -23,8 +30,8 @@ export default function Signin() {
     };
     setErrors(nextErrors);
     if (Object.values(nextErrors).some(Boolean)) return setTimeout(focusFirstInvalid);
-    setUser({ name: nameFromEmail(email), email, role: 'Owner' });
-    navigate('/app/overview');
+    setUser({ name: nameFromEmail(email), email, role });
+    navigate(role === 'Admin' ? '/admin' : '/app/overview');
   }
 
   return (
@@ -37,6 +44,13 @@ export default function Signin() {
           <form className="narrow" noValidate onSubmit={handleSubmit}>
             <FormField id="email" label="Email Address" type="email" placeholder="Enter your email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} error={errors.email} />
             <PasswordField id="pw" label="Password" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} error={errors.pw} />
+            <div className="field">
+              <label htmlFor="role">Sign in as (demo)</label>
+              <select id="role" value={role} onChange={e => setRole(e.target.value)}>
+                {ROLES.map(r => <option key={r.id} value={r.id}>{r.label}</option>)}
+              </select>
+              <p className="hint">This prototype has no real accounts yet — pick the dashboard you want to preview.</p>
+            </div>
             <div className="row-between">
               <label className="check"><input type="checkbox" name="remember" /> Remember me</label>
               <button type="button" className="link" onClick={() => toast('Password reset isn’t connected in this prototype.')}>Forgot password?</button>

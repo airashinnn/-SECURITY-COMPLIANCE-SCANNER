@@ -5,7 +5,10 @@ import { sevKey, statusChip, chip } from '../components/chips.jsx';
 const SEVERITIES = ['Critical', 'High', 'Medium', 'Low'];
 
 export default function Overview() {
-  const { apps, findings } = useApp();
+  const { apps: allApps, findings: allFindings, org } = useApp();
+  const apps = allApps.filter(x => x.org === org);
+  const appIds = new Set(apps.map(x => x.id));
+  const findings = allFindings.filter(f => appIds.has(f.appId));
   const auth = apps.filter(x => x.status === 'Authorized').length;
   const pend = apps.filter(x => x.status === 'Pending').length;
   const scored = apps.filter(x => x.score != null);

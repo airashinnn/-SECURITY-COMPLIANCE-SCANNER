@@ -8,11 +8,29 @@ import Signup from './pages/Signup.jsx';
 import AppShell from './pages/AppShell.jsx';
 import Overview from './pages/Overview.jsx';
 import Applications from './pages/Applications.jsx';
+import ApplicationDetails from './pages/ApplicationDetails.jsx';
+import ScanConfiguration from './pages/ScanConfiguration.jsx';
+import AssessmentHistory from './pages/AssessmentHistory.jsx';
+import AssessmentProgress from './pages/AssessmentProgress.jsx';
+import AssessmentDetails from './pages/AssessmentDetails.jsx';
 import Assessment from './pages/Assessment.jsx';
 import Findings from './pages/Findings.jsx';
+import FindingDetails from './pages/FindingDetails.jsx';
 import Remediation from './pages/Remediation.jsx';
 import Members from './pages/Members.jsx';
 import Account from './pages/Account.jsx';
+import AdminShell from './pages/AdminShell.jsx';
+import AdminOverview from './pages/admin/AdminOverview.jsx';
+import UserManagement from './pages/admin/UserManagement.jsx';
+import UserDetails from './pages/admin/UserDetails.jsx';
+import OrganizationManagement from './pages/admin/OrganizationManagement.jsx';
+import OrganizationDetails from './pages/admin/OrganizationDetails.jsx';
+import ApplicationManagementAdmin from './pages/admin/ApplicationManagementAdmin.jsx';
+import AuthorizationReview from './pages/admin/AuthorizationReview.jsx';
+import AdminApplicationDetails from './pages/admin/AdminApplicationDetails.jsx';
+import AssessmentMonitoring from './pages/admin/AssessmentMonitoring.jsx';
+import SystemActivity from './pages/admin/SystemActivity.jsx';
+import SystemHealth from './pages/admin/SystemHealth.jsx';
 
 export default function App() {
   return (
@@ -24,17 +42,42 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+
             <Route path="/app" element={<AppShell />}>
               <Route index element={<Navigate to="overview" replace />} />
               <Route path="overview" element={<Overview />} />
               <Route path="applications" element={<Applications />} />
+              <Route path="applications/:appId" element={<ApplicationDetails />} />
+              <Route path="applications/:appId/scan" element={<ScanConfiguration />} />
+              <Route path="applications/:appId/assessments" element={<AssessmentHistory />} />
+              <Route path="assessments/:assessmentId" element={<AssessmentDetails />} />
+              <Route path="assessments/:assessmentId/progress" element={<AssessmentProgress />} />
               <Route path="assessment" element={<Assessment />} />
               <Route path="findings" element={<Findings />} />
+              <Route path="findings/:findingId" element={<FindingDetails />} />
               <Route path="remediation" element={<Remediation />} />
               <Route path="members" element={<Members />} />
               <Route path="account" element={<Account />} />
               <Route path="*" element={<Navigate to="overview" replace />} />
             </Route>
+
+            <Route path="/admin" element={<AdminShell />}>
+              <Route index element={<Navigate to="overview" replace />} />
+              <Route path="overview" element={<AdminOverview />} />
+              <Route path="users" element={<UserManagement />} />
+              <Route path="users/:email" element={<UserDetails />} />
+              <Route path="organizations" element={<OrganizationManagement />} />
+              <Route path="organizations/:name" element={<OrganizationDetails />} />
+              <Route path="applications" element={<ApplicationManagementAdmin />} />
+              <Route path="applications/review/:appId" element={<AuthorizationReview />} />
+              <Route path="applications/overview/:appId" element={<AdminApplicationDetails />} />
+              <Route path="assessments" element={<AssessmentMonitoring />} />
+              <Route path="assessments/:assessmentId" element={<AssessmentDetails />} />
+              <Route path="activity" element={<SystemActivity />} />
+              <Route path="health" element={<SystemHealth />} />
+              <Route path="*" element={<Navigate to="overview" replace />} />
+            </Route>
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </HashRouter>

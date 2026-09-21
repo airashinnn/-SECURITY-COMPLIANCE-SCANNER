@@ -5,7 +5,9 @@ import { useToast } from '../context/ToastContext.jsx';
 const STATUSES = ['Open', 'In progress', 'Resolved'];
 
 export default function Remediation() {
-  const { findings, updateFindingStatus } = useApp();
+  const { findings: allFindings, apps, org, updateFindingStatus } = useApp();
+  const orgAppIds = new Set(apps.filter(a => a.org === org).map(a => a.id));
+  const findings = allFindings.filter(f => orgAppIds.has(f.appId));
   const toast = useToast();
 
   function handleChange(id, status) {

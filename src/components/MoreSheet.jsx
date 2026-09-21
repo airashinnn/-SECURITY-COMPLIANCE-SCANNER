@@ -4,7 +4,7 @@ import Icon from './Icon.jsx';
 import { MORE, PAGES } from '../data/icons.js';
 import { useApp } from '../context/AppContext.jsx';
 
-const MoreSheet = forwardRef(function MoreSheet(_, ref) {
+const MoreSheet = forwardRef(function MoreSheet({ items = MORE }, ref) {
   const dialogRef = useRef(null);
   const navigate = useNavigate();
   const { signOut } = useApp();
@@ -24,7 +24,7 @@ const MoreSheet = forwardRef(function MoreSheet(_, ref) {
       <div className="sheet__in">
         <h2 className="sr">More</h2>
         <nav aria-label="More">
-          {MORE.map(p => (
+          {items.map(p => (
             <NavLink key={p} className="navlink" to={`/app/${p}`} onClick={() => dialogRef.current?.close()}>
               <Icon name={PAGES[p][1]} />
               <span>{PAGES[p][0]}</span>

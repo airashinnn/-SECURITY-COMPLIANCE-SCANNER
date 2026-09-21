@@ -8,12 +8,13 @@ const AddAppDialog = forwardRef(function AddAppDialog(_, ref) {
   const { addApp } = useApp();
   const toast = useToast();
   const [name, setName] = useState('');
+  const [url, setUrl] = useState('');
   const [type, setType] = useState('Web app');
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
 
   useImperativeHandle(ref, () => ({
     open() {
-      setName(''); setType('Web app'); setError('');
+      setName(''); setUrl(''); setType('Web app'); setErrors({});
       dialogRef.current?.showModal();
     }
   }));
@@ -21,10 +22,15 @@ const AddAppDialog = forwardRef(function AddAppDialog(_, ref) {
   function submit(e) {
     e.preventDefault();
     // TODO(backend): POST /applications.
-    if (!name) { setError('Enter the application’s name.'); return; }
-    addApp({ name, type });
+    const nextErrors = {
+      name: name ? '' : 'Enter the application’s name.',
+      url: url ? '' : 'Enter the website or domain to assess.'
+    };
+    setErrors(nextErrors);
+    if (Object.values(nextErrors).some(Boolean)) return;
+    addApp({ name, url, type });
     dialogRef.current?.close();
-    toast('Application added');
+    toast('Application added — waiting for authorization');
   }
 
   return (
@@ -35,7 +41,8 @@ const AddAppDialog = forwardRef(function AddAppDialog(_, ref) {
     >
       <form className="dlg__in" noValidate onSubmit={submit}>
         <h2 id="dlg-title">Add application</h2>
-        <FormField id="aname" label="Application name" placeholder="e.g. Customer Portal" value={name} onChange={e => setName(e.target.value)} error={error} />
+        <FormField id="aname" label="Application name" placeholder="e.g. Customer Portal" value={name} onChange={e => setName(e.target.value)} error={errors.name} />
+        <FormField id="aurl" label="Website / Domain" placeholder="https://example.com" value={url} onChange={e => setUrl(e.target.value)} error={errors.url} />
         <div className="field">
           <label htmlFor="atype">Application type</label>
           <select id="atype" value={type} onChange={e => setType(e.target.value)}>

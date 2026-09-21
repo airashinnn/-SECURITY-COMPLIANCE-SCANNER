@@ -1,19 +1,21 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import { statusChip } from '../components/chips.jsx';
 import { useApp } from '../context/AppContext.jsx';
 import { useOpenAddAppDialog } from './AppShell.jsx';
 
-const STATUSES = ['All', 'Authorized', 'Pending'];
+const STATUSES = ['All', 'Authorized', 'Pending', 'Rejected', 'Revoked'];
 
 export default function Applications() {
-  const { apps } = useApp();
+  const { apps, org } = useApp();
   const openAddApp = useOpenAddAppDialog();
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('All');
 
   const q = query.toLowerCase();
   const list = apps.filter(x =>
+    x.org === org &&
     (status === 'All' || x.status === status) &&
     (!q || x.name.toLowerCase().includes(q) || x.type.toLowerCase().includes(q))
   );
@@ -33,7 +35,7 @@ export default function Applications() {
       </div>
       <div className="grid-apps">
         {list.map(x => (
-          <article className="card app" key={x.name}>
+          <Link className="card app app--link" to={`/app/applications/${x.id}`} key={x.id}>
             <div className="app__top"><h3>{x.name}</h3>{statusChip(x.status)}</div>
             <p className="muted">{x.type}</p>
             {x.score != null ? (
@@ -45,9 +47,11 @@ export default function Applications() {
                 <p className="meta">Last assessed {x.assessed}</p>
               </>
             ) : (
-              <p className="meta" style={{ marginTop: 'auto' }}>Not assessed yet. Waiting for authorization.</p>
+              <p className="meta" style={{ marginTop: 'auto' }}>
+                {x.status === 'Pending' ? 'Not assessed yet. Waiting for authorization.' : x.status === 'Rejected' ? 'Registration rejected.' : 'Authorization revoked.'}
+              </p>
             )}
-          </article>
+          </Link>
         ))}
         <button type="button" className="card app add" onClick={openAddApp}>
           <Icon name="plus" size={36} />
