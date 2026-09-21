@@ -1,20 +1,33 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
+import ConfirmDialog from '../components/ConfirmDialog.jsx';
 import { useApp } from '../context/AppContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 
 export default function Members() {
-  const { members, pending, approveMember, declineMember } = useApp();
+  const { user, members, pending, approveMember, declineMember, removeMember } = useApp();
   const toast = useToast();
   const [tab, setTab] = useState('current');
+  const [detailsMember, setDetailsMember] = useState(null);
   const cur = tab === 'current';
 
-  function approve(i) {
-    const m = approveMember(i);
+  if (user?.role === 'Developer') return <Navigate to="/app/overview" replace />;
+
+  const removeRef = useRef(null);
+  const approveRef = useRef(null);
+  const declineRef = useRef(null);
+
+  function confirmRemove(index) {
+    const m = removeMember(index);
+    if (m) toast(`${m.name} was removed from the organization`);
+  }
+  function confirmApprove(index) {
+    const m = approveMember(index);
     if (m) toast(`${m.name} joined the organization`);
   }
-  function decline(i) {
-    const m = declineMember(i);
+  function confirmDecline(index) {
+    const m = declineMember(index);
     if (m) toast(`Request from ${m.name} declined`);
   }
 
@@ -37,14 +50,20 @@ export default function Members() {
           members.length ? (
             <div className="tblwrap">
               <table className="tbl">
-                <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+                <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
                 <tbody>
-                  {members.map(m => (
+                  {members.map((m, i) => (
                     <tr key={m.email}>
                       <td className="lead" data-label="Name">{m.name}</td>
                       <td data-label="Email">{m.email}</td>
                       <td data-label="Role">{m.role}</td>
                       <td data-label="Joined">{m.joined}</td>
+                      <td data-label="Actions">
+                        <span style={{ display: 'inline-flex', gap: 8 }}>
+                          <button className="btn btn--sm btn--dark-outline" onClick={() => setDetailsMember(m)}>View details</button>
+                          <button className="btn btn--sm btn--danger" onClick={() => removeRef.current?.open(i)}>Remove</button>
+                        </span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -64,8 +83,8 @@ export default function Members() {
                       <td data-label="Requested">{m.requested}</td>
                       <td data-label="Actions">
                         <span style={{ display: 'inline-flex', gap: 8 }}>
-                          <button className="btn btn--sm" aria-label={`Approve ${m.name}`} onClick={() => approve(i)}>Approve</button>
-                          <button className="btn btn--sm btn--dark-outline" aria-label={`Decline ${m.name}`} onClick={() => decline(i)}>Decline</button>
+                          <button className="btn btn--sm" aria-label={`Approve ${m.name}`} onClick={() => approveRef.current?.open(i)}>Approve</button>
+                          <button className="btn btn--sm btn--dark-outline" aria-label={`Decline ${m.name}`} onClick={() => declineRef.current?.open(i)}>Decline</button>
                         </span>
                       </td>
                     </tr>
@@ -76,6 +95,46 @@ export default function Members() {
           ) : <p className="empty">No pending requests. New join requests will show up here.</p>
         )}
       </div>
+
+      {detailsMember && (
+        <div className="modal-backdrop" role="presentation" onClick={() => setDetailsMember(null)}>
+          <div className="card confirm-modal" role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
+            <h2>{detailsMember.name}</h2>
+            <dl className="detail-grid">
+              <div><dt>Email</dt><dd>{detailsMember.email}</dd></div>
+              <div><dt>Role</dt><dd>{detailsMember.role}</dd></div>
+              <div><dt>Joined</dt><dd>{detailsMember.joined}</dd></div>
+            </dl>
+            <div className="actions row">
+              <button type="button" className="btn" onClick={() => setDetailsMember(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <ConfirmDialog
+        ref={removeRef}
+        title="Remove member?"
+        message={i => `Remove ${members[i]?.name} from the organization? They will lose access immediately.`}
+        confirmLabel="Remove member"
+        danger
+        onConfirm={confirmRemove}
+      />
+      <ConfirmDialog
+        ref={approveRef}
+        title="Approve join request?"
+        message={i => `Approve ${pending[i]?.name}'s request to join the organization?`}
+        confirmLabel="Approve"
+        onConfirm={confirmApprove}
+      />
+      <ConfirmDialog
+        ref={declineRef}
+        title="Decline join request?"
+        message={i => `Decline ${pending[i]?.name}'s request to join the organization?`}
+        confirmLabel="Decline"
+        danger
+        onConfirm={confirmDecline}
+      />
     </>
   );
 }

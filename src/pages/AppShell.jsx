@@ -5,14 +5,14 @@ import Logo from '../components/Logo.jsx';
 import OrgSwitcher from '../components/OrgSwitcher.jsx';
 import AddAppDialog from '../components/AddAppDialog.jsx';
 import MoreSheet from '../components/MoreSheet.jsx';
-import { MORE, PAGES, SIDE, TAB } from '../data/icons.js';
+import { MORE, MORE_DEVELOPER, PAGES, SIDE, SIDE_DEVELOPER, TAB } from '../data/icons.js';
 import { useApp } from '../context/AppContext.jsx';
 
 const AddAppDialogContext = createContext(() => {});
 export const useOpenAddAppDialog = () => useContext(AddAppDialogContext);
 
 export default function AppShell() {
-  const { user } = useApp();
+  const { user, isAdmin } = useApp();
   const location = useLocation();
   const dialogRef = useRef(null);
   const sheetRef = useRef(null);
@@ -24,11 +24,17 @@ export default function AppShell() {
   }, [location.pathname]);
 
   if (!user) return <Navigate to="/signin" replace />;
+  if (isAdmin) return <Navigate to="/admin" replace />;
 
-  const page = location.pathname.split('/')[2];
+  const isOwner = user.role !== 'Developer';
+  const side = isOwner ? SIDE : SIDE_DEVELOPER;
+  const more = isOwner ? MORE : MORE_DEVELOPER;
+
+  const rawPage = location.pathname.split('/')[2];
+  const page = rawPage === 'assessments' ? 'assessment' : rawPage;
   const activePage = PAGES[page] ? page : 'overview';
   const title = PAGES[activePage][0];
-  const isMoreActive = MORE.includes(activePage);
+  const isMoreActive = more.includes(activePage);
   const openAddApp = () => dialogRef.current?.open();
 
   return (
@@ -39,7 +45,7 @@ export default function AppShell() {
             <Logo /><span>SCS</span>
           </NavLink>
           <nav aria-label="Primary">
-            {SIDE.map(p => (
+            {side.map(p => (
               <NavLink key={p} className="navlink" to={`/app/${p}`}>
                 <Icon name={PAGES[p][1]} />
                 <span>{PAGES[p][0]}</span>
@@ -79,7 +85,7 @@ export default function AppShell() {
         </nav>
 
         <AddAppDialog ref={dialogRef} />
-        <MoreSheet ref={sheetRef} />
+        <MoreSheet ref={sheetRef} items={more} />
       </div>
     </AddAppDialogContext.Provider>
   );

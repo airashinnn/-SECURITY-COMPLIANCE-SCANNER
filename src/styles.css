@@ -225,6 +225,55 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
 .toast{position:fixed;left:50%;bottom:calc(28px + var(--safe-b));transform:translateX(-50%);z-index:80;max-width:min(92vw,460px);background:#fff;color:#000;padding:12px 18px;border-radius:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.show{opacity:1}
 
+/* ---------- Buttons: danger + card-as-link ---------- */
+.btn--danger{background:var(--crit);border-color:var(--crit)}
+.btn--danger:hover{background:#8f0016;border-color:#8f0016}
+.app--link{text-decoration:none;color:inherit;cursor:pointer}
+.app--link:hover{box-shadow:0 0 0 2px var(--accent),var(--shadow)}
+.back-link{display:inline-block;margin-bottom:16px;font-weight:600}
+
+/* ---------- Detail pages (application / assessment / user / org) ---------- */
+.app-detail__head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}
+.app-detail__head h2{font-size:22px;font-weight:600;color:#000}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px 24px;margin-bottom:20px}
+.detail-grid dt{font-size:13px;color:var(--ink-2);margin-bottom:2px}
+.detail-grid dd{margin:0;font-weight:600}
+.target-url{font-weight:700;font-size:17px;word-break:break-all}
+.evidence{background:#f3f3fb;border-radius:8px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;overflow-wrap:anywhere}
+.remediation-steps{padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.remediation-steps li{padding-left:4px}
+
+/* ---------- Modal-style overlays (scan confirm, member details) ---------- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,12,.72);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px}
+.confirm-modal{width:min(520px,100%);background:#0a0a48;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.confirm-modal h2{margin-bottom:16px}
+.confirm-modal .detail-grid dt{color:var(--muted)}
+.confirm-msg{margin-bottom:8px}
+
+/* ---------- Scan configuration ---------- */
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.profile-card{text-align:left;cursor:pointer;border:0;display:flex;flex-direction:column;gap:6px;min-height:140px}
+.profile-card h4{font-size:17px;font-weight:600}
+.profile-card:hover{box-shadow:0 0 0 2px var(--accent),var(--shadow)}
+.check-group{margin-bottom:20px}
+.checklist-item{display:flex;min-height:auto;padding:8px 0;font-size:15px}
+
+/* ---------- Assessment progress ---------- */
+.progress-card{max-width:520px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.bar--lg{height:16px;width:100%;margin-top:8px}
+.progress-pct{font-size:28px;font-weight:600}
+
+/* ---------- Admin shell ---------- */
+.admin-badge{background:#fff;color:var(--primary);font-weight:700;font-size:14px;padding:8px 16px;border-radius:15px;box-shadow:var(--shadow);white-space:nowrap}
+.admin-mobile-nav{display:none}
+.hero-kpi{display:flex;flex-wrap:wrap;align-items:center;gap:20px;justify-content:space-between}
+.hero-kpi h2{font-size:18px}
+.hero-kpi__num{font-size:64px;font-weight:700;line-height:1;color:var(--primary)}
+.hero-kpi__num--ok{color:var(--ok)}
+.hero-kpi__num--warn{color:var(--med)}
+.hero-kpi__num--crit{color:var(--crit)}
+.hero-kpi--health{align-items:flex-start}
+
 /* ---------- Responsive ---------- */
 @media (max-width:1180px){
   .lower{grid-template-columns:1fr 1fr}
@@ -236,7 +285,9 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
   .top{position:sticky;top:0;z-index:20;background:var(--bg);padding:calc(12px + var(--safe-t)) 16px 12px}
   .top h1{font-size:24px}
   .orgsw>button{min-height:44px;padding:0 12px;font-size:15px;max-width:min(52vw,220px)}
+  .admin-mobile-nav{display:block;margin:0 16px 4px;width:calc(100% - 32px)}
   .content{padding:20px 16px calc(104px + var(--safe-b))}
+  .shell:has(.admin-mobile-nav) .content{padding-bottom:20px}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
   .stat{min-height:130px}
   .stat p{font-size:34px}
@@ -267,6 +318,8 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
   .tbl td::before{content:attr(data-label);color:var(--ink-2);font-weight:500;text-align:left}
   .tbl td.lead{display:block;text-align:left;font-size:16px}
   .tbl td.lead::before{display:none}
+  .hero-kpi__num{font-size:40px}
+  .app-detail__head{flex-direction:column}
 }
 @media (max-width:380px){
   .cta .btn{font-size:17px}
