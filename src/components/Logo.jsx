@@ -29,7 +29,7 @@ export function ShieldDefs() {
             <circle cx="94" cy="32" r="2" />
           </g>
           <path d="M38 58l15 15 29-31" fill="none" stroke="currentColor" strokeWidth="9" strokeLinejoin="miter" />
-          <text x="60" y="108" textAnchor="middle" fontFamily="Inter,system-ui,sans-serif" fontWeight="900" fontSize="25" fill="currentColor">SCS</text>
+          <text x="60" y="108" textAnchor="middle" fontFamily="'Space Grotesk',Inter,system-ui,sans-serif" fontWeight="700" fontSize="25" fill="currentColor">SCS</text>
         </symbol>
       </defs>
     </svg>
