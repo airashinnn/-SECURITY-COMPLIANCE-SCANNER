@@ -54,7 +54,8 @@ h1:focus,h2:focus,#view:focus{outline:none}
 /* ---------- Forms ---------- */
 .field{margin-bottom:16px}
 .field label{display:block;font-weight:500;margin-bottom:6px}
-.field input,.field select,.field textarea{width:100%;min-height:46px;background:transparent;border:2px solid #fff;border-radius:5px;padding:0 14px;font-size:16px}
+.field input,.field select,.field textarea{width:100%;min-height:46px;background:transparent;border:2px solid #fff;border-radius:5px;padding:0 14px;font-size:16px;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--mint)}
 .field textarea{padding:12px 14px;min-height:96px;resize:vertical}
 .field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.5)}
 .field select{appearance:none;-webkit-appearance:none;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
@@ -72,7 +73,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .check input{width:20px;height:20px;accent-color:var(--accent)}
 
 /* ---------- Landing ---------- */
-.landing{min-height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:48px;padding:clamp(28px,6vw,64px) clamp(24px,9vw,143px)}
+.landing{min-height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:48px;padding:clamp(28px,6vw,64px) clamp(24px,9vw,143px);background:radial-gradient(ellipse 900px 600px at 85% 15%,rgba(0,141,217,.18),transparent 60%),var(--bg)}
 .landing h1{font-size:clamp(42px,7.4vw,64px);font-weight:900;line-height:1.05;letter-spacing:-.01em;color:var(--brand);max-width:6.7em}
 .tagline{color:var(--accent);font-size:clamp(18px,2.6vw,24px);margin-top:28px}
 .lede{color:var(--accent);font-size:clamp(18px,2.6vw,24px);margin-top:16px;max-width:18em}
@@ -85,7 +86,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 @keyframes sweep{from{transform:translateY(0)}to{transform:translateY(176px)}}
 
 /* ---------- Auth ---------- */
-.auth{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(104px + var(--safe-t)) 20px 56px;position:relative}
+.auth{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(104px + var(--safe-t)) 20px 56px;position:relative;background:radial-gradient(ellipse 700px 480px at 50% -8%,rgba(74,69,255,.22),transparent 60%),var(--bg)}
 .corner{position:absolute;left:clamp(12px,3.5vw,52px);top:calc(12px + var(--safe-t));width:clamp(64px,11vw,170px)}
 .corner .logo{width:100%;height:auto}
 .auth__col{width:min(720px,100%)}
@@ -218,7 +219,10 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .tbl td{padding:16px 20px;border-bottom:1px solid var(--rule);vertical-align:middle}
 .tbl tr:last-child td{border-bottom:0}
 .tbl td.lead{font-weight:600}
-.empty{padding:40px 20px;text-align:center;color:var(--ink-2)}
+.tbl tbody tr{transition:background-color .1s}
+.tbl tbody tr:hover{background:#f6f6fb}
+.empty{padding:56px 20px;text-align:center;color:var(--ink-2);font-size:15px}
+.empty::before{content:'';display:block;width:44px;height:44px;margin:0 auto 14px;border-radius:50%;background-color:#f0f0fa;background-repeat:no-repeat;background-position:center;background-size:22px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239a9ab8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 8l-2 11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L3 8'/%3E%3Cpath d='M3 8h18M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/%3E%3C/svg%3E")}
 .tabs{display:flex;border-bottom:1px solid #fff;margin-bottom:24px}
 .tab-btn{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 18px;background:none;border:0;border-bottom:4px solid transparent;margin-bottom:-1px;font-size:16px;font-weight:600;color:var(--muted);cursor:pointer}
 .tab-btn[aria-selected="true"]{color:#fff;border-bottom-color:var(--accent)}
