@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { chip, sevKey, statusChip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
+import { chip, sevKey, statusChip } from '../../components/chips.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 
 const STATUSES = ['Open', 'In progress', 'Resolved'];
 
@@ -24,9 +25,12 @@ export default function FindingDetails() {
       <button type="button" className="link back-link" onClick={() => navigate(-1)}>← Back</button>
       <div className="card app-detail">
         <div className="app-detail__head">
-          <div>
-            <h2>{finding.title}</h2>
-            <p className="muted">{finding.id} · {finding.app} · {finding.category}</p>
+          <div className="app-detail__title">
+            <IconBadge name="findings" tintVar={`--${sevKey(finding.sev)}`} />
+            <div>
+              <h2>{finding.title}</h2>
+              <p className="muted">{finding.id} · {finding.app} · {finding.category}</p>
+            </div>
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {chip(finding.sev, sevKey(finding.sev))}

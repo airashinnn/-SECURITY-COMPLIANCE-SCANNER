@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { chip, sevKey, statusChip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
+import { chip, sevKey, statusChip } from '../../components/chips.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 const STATUS_FILTERS = ['Open', 'Resolved', 'All'];
 const SEV_FILTERS = ['All', 'Critical', 'High', 'Medium', 'Low'];

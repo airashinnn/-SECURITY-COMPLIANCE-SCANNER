@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { statusChip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
+import { statusChip } from '../../components/chips.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 export default function ApplicationDetails() {
   const { appId } = useParams();
@@ -25,9 +26,12 @@ export default function ApplicationDetails() {
       <button type="button" className="link back-link" onClick={() => navigate('/app/applications')}>← Back to Applications</button>
       <div className="card app-detail">
         <div className="app-detail__head">
-          <div>
-            <h2>{app.name}</h2>
-            <p className="muted">{app.url}</p>
+          <div className="app-detail__title">
+            <IconBadge name="apps" />
+            <div>
+              <h2>{app.name}</h2>
+              <p className="muted">{app.url}</p>
+            </div>
           </div>
           {statusChip(app.status)}
         </div>

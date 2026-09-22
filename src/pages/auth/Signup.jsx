@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../components/Logo.jsx';
-import Icon from '../components/Icon.jsx';
-import { FormField, PasswordField } from '../components/FormField.jsx';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
-import { EMAIL, focusFirstInvalid } from '../utils.js';
+import Logo from '../../components/Logo.jsx';
+import Icon from '../../components/Icon.jsx';
+import { FormField, PasswordField } from '../../components/FormField.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
+import { EMAIL, focusFirstInvalid } from '../../utils.js';
 
 const Stepper = ({ n }) => (
   <ol className="steps" aria-label="Sign-up progress">

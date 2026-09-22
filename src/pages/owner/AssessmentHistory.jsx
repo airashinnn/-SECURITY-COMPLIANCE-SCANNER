@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { chip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
+import { chip } from '../../components/chips.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 const STATUS_TONE = { Completed: 'ok', Running: 'warn', Failed: 'danger', Cancelled: 'info' };
 

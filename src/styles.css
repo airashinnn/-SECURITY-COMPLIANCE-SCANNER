@@ -219,6 +219,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .tbl td{padding:16px 20px;border-bottom:1px solid var(--rule);vertical-align:middle}
 .tbl tr:last-child td{border-bottom:0}
 .tbl td.lead{font-weight:600}
+.log-ts{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--ink-2);white-space:nowrap}
 .tbl tbody tr{transition:background-color .1s}
 .tbl tbody tr:hover{background:#f6f6fb}
 .empty{padding:56px 20px;text-align:center;color:var(--ink-2);font-size:15px}
@@ -228,13 +229,13 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .tab-btn[aria-selected="true"]{color:#fff;border-bottom-color:var(--accent)}
 .stats--two{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:24px}
 .stats--two .stat{min-height:110px}
-.avatar{width:72px;height:72px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:26px;font-weight:600}
+.avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;display:grid;place-items:center;font-size:26px;font-weight:600;flex:none}
 .acct{max-width:560px}
 .acct dl{margin:24px 0}
 .acct dl div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--rule)}
 .acct dt{color:var(--ink-2)}.acct dd{margin:0;font-weight:600;text-align:right}
 .head-row{display:flex;align-items:center;gap:20px}
-.head-row h2{font-size:22px;color:#000}
+.head-row h2{font-size:22px;color:#000;margin-bottom:6px}
 
 /* ---------- Mobile tab bar, sheet, dialog, toast ---------- */
 .tabbar{display:none}
@@ -259,6 +260,8 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
 /* ---------- Detail pages (application / assessment / user / org) ---------- */
 .app-detail__head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}
 .app-detail__head h2{font-size:22px;font-weight:600;color:#000}
+.app-detail__title{display:flex;align-items:center;gap:16px}
+.icon-badge{border-radius:12px;background:#eef0ff;color:var(--primary);display:grid;place-items:center;flex:none}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px 24px;margin-bottom:20px}
 .detail-grid dt{font-size:13px;color:var(--ink-2);margin-bottom:2px}
 .detail-grid dd{margin:0;font-weight:600}
@@ -276,9 +279,10 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
 
 /* ---------- Scan configuration ---------- */
 .profile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.profile-card{text-align:left;cursor:pointer;border:0;display:flex;flex-direction:column;gap:6px;min-height:140px}
+.profile-card{text-align:left;cursor:pointer;border:0;display:flex;flex-direction:column;gap:6px;min-height:150px;transition:box-shadow .15s,transform .15s}
+.profile-card__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
 .profile-card h4{font-size:17px;font-weight:600}
-.profile-card:hover{box-shadow:0 0 0 2px var(--accent),var(--shadow)}
+.profile-card:hover{box-shadow:0 0 0 2px var(--accent),var(--shadow);transform:translateY(-2px)}
 .check-group{margin-bottom:20px}
 .checklist-item{display:flex;min-height:auto;padding:8px 0;font-size:15px}
 
@@ -286,6 +290,9 @@ dialog::backdrop{background:rgba(0,0,12,.72)}
 .progress-card{max-width:520px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
 .bar--lg{height:16px;width:100%;margin-top:8px}
 .progress-pct{font-size:28px;font-weight:600}
+.progress-spinner{position:relative}
+.progress-spinner::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:3px solid #eceef5;border-top-color:var(--accent);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- Admin shell ---------- */
 .admin-badge{background:#fff;color:var(--primary);font-weight:700;font-size:14px;padding:8px 16px;border-radius:15px;box-shadow:var(--shadow);white-space:nowrap}

@@ -49,7 +49,7 @@ export default function UserManagement() {
                     <td data-label="Role">{u.role}</td>
                     <td data-label="Organization">{u.organization}</td>
                     <td data-label="Joined">{u.joined}</td>
-                    <td data-label="Status">{chip(u.status, u.status === 'Active' ? 'ok' : 'crit')}</td>
+                    <td data-label="Status">{chip(u.status, u.status === 'Active' ? 'ok' : 'danger')}</td>
                     <td data-label="Actions">
                       <Link className="btn btn--sm btn--dark-outline" to={`/admin/users/${encodeURIComponent(u.email)}`}>View details</Link>
                     </td>

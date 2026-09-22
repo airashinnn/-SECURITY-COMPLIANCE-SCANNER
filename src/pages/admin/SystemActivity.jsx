@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '../../components/Icon.jsx';
+import { chip } from '../../components/chips.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 
 export default function SystemActivity() {
@@ -35,9 +36,9 @@ export default function SystemActivity() {
               <tbody>
                 {list.map(l => (
                   <tr key={l.id}>
-                    <td data-label="Timestamp">{l.timestamp}</td>
+                    <td className="log-ts" data-label="Timestamp">{l.timestamp}</td>
                     <td className="lead" data-label="Actor">{l.actor}</td>
-                    <td data-label="Action">{l.action}</td>
+                    <td data-label="Action">{chip(l.action, l.actor === 'System' ? 'info' : 'ok')}</td>
                     <td data-label="Target">{l.target}</td>
                     <td data-label="Details">{l.details || '—'}</td>
                   </tr>

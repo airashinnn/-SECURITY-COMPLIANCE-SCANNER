@@ -1,6 +1,6 @@
-import { chip, sevKey } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
+import { chip, sevKey } from '../../components/chips.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 
 const STATUSES = ['Open', 'In progress', 'Resolved'];
 
