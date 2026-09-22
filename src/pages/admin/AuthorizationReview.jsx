@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
@@ -31,7 +32,15 @@ export default function AuthorizationReview() {
     <>
       <button type="button" className="link back-link" onClick={() => navigate('/admin/applications')}>← Back to Authorization Queue</button>
       <div className="card app-detail">
-        <h2>Authorization Review</h2>
+        <div className="app-detail__head">
+          <div className="app-detail__title">
+            <IconBadge name="apps" tintVar="--warn" />
+            <div>
+              <h2>Authorization Review</h2>
+              <p className="muted">{app.name}</p>
+            </div>
+          </div>
+        </div>
         <dl className="detail-grid">
           <div><dt>Application</dt><dd>{app.name}</dd></div>
           <div className="target-url-row"><dt>Target URL</dt><dd className="target-url">{app.url}</dd></div>

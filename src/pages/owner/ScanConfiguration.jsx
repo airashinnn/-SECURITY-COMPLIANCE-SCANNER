@@ -3,6 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { SCAN_PROFILES, ALL_CHECKS } from '../../data/scanProfiles.js';
 import { useApp } from '../../context/AppContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
+import { chip } from '../../components/chips.jsx';
+
+const PROFILE_ICON = { quick: 'search', standard: 'assess', full: 'health', custom: 'remediation' };
 
 export default function ScanConfiguration() {
   const { appId } = useParams();
@@ -43,9 +47,14 @@ export default function ScanConfiguration() {
       <>
         <button type="button" className="link back-link" onClick={() => setProfileId(null)}>← Back to scan profiles</button>
         <div className="card scan-config">
-          <h2>Custom Scan — {app.name}</h2>
-          <p className="muted">{app.url}</p>
-          <p style={{ margin: '12px 0 20px' }}>Select the individual checks to execute.</p>
+          <div className="app-detail__title" style={{ marginBottom: 16 }}>
+            <IconBadge name="remediation" />
+            <div>
+              <h2>Custom Scan — {app.name}</h2>
+              <p className="muted">{app.url}</p>
+            </div>
+          </div>
+          <p style={{ margin: '0 0 20px' }}>Select the individual checks to execute.</p>
           {Object.entries(groupedChecks).map(([category, checks]) => (
             <div key={category} className="check-group">
               <h3 className="sect">{category}</h3>
@@ -72,7 +81,10 @@ export default function ScanConfiguration() {
     <>
       <button type="button" className="link back-link" onClick={() => navigate(`/app/applications/${app.id}`)}>← Back to {app.name}</button>
       <div className="card scan-config">
-        <h2>Scan Application</h2>
+        <div className="app-detail__title" style={{ marginBottom: 16 }}>
+          <IconBadge name="apps" />
+          <h2>Scan Application</h2>
+        </div>
         <dl className="detail-grid" style={{ marginBottom: 24 }}>
           <div><dt>Application name</dt><dd>{app.name}</dd></div>
           <div><dt>Website / Domain</dt><dd>{app.url}</dd></div>
@@ -81,6 +93,10 @@ export default function ScanConfiguration() {
         <div className="profile-grid">
           {SCAN_PROFILES.map(p => (
             <button type="button" key={p.id} className="card profile-card" onClick={() => choose(p.id)}>
+              <div className="profile-card__head">
+                <IconBadge name={PROFILE_ICON[p.id]} size={40} />
+                {p.id === 'standard' && chip('Recommended', 'ok')}
+              </div>
               <h4>{p.name}</h4>
               <p className="muted">{p.purpose}</p>
               <p className="meta">{p.id === 'custom' ? 'Choose your own checks' : `${p.checks.length} checks`}</p>

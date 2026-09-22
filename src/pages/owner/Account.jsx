@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Icon from '../../components/Icon.jsx';
+import { chip } from '../../components/chips.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 
 export default function Account() {
@@ -12,11 +13,13 @@ export default function Account() {
     <section className="card acct">
       <div className="head-row">
         <div className="avatar" aria-hidden="true">{initials}</div>
-        <h2>{u.name}</h2>
+        <div>
+          <h2>{u.name}</h2>
+          {chip(u.role, 'info')}
+        </div>
       </div>
       <dl>
         <div><dt>Email</dt><dd>{u.email}</dd></div>
-        <div><dt>Role</dt><dd>{u.role}</dd></div>
         <div><dt>Organization</dt><dd>{org}</dd></div>
       </dl>
       <button className="btn btn--block" onClick={() => { signOut(); navigate('/'); }}>

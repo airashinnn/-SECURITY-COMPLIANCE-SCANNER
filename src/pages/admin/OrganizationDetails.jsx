@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { chip } from '../../components/chips.jsx';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
@@ -32,11 +33,14 @@ export default function OrganizationDetails() {
       <button type="button" className="link back-link" onClick={() => navigate('/admin/organizations')}>← Back to Organization Management</button>
       <div className="card app-detail">
         <div className="app-detail__head">
-          <div>
-            <h2>{organization.name}</h2>
-            <p className="muted">{organization.type}</p>
+          <div className="app-detail__title">
+            <IconBadge name="building" />
+            <div>
+              <h2>{organization.name}</h2>
+              <p className="muted">{organization.type}</p>
+            </div>
           </div>
-          {chip(organization.status, isActive ? 'ok' : 'crit')}
+          {chip(organization.status, isActive ? 'ok' : 'danger')}
         </div>
         <dl className="detail-grid">
           <div><dt>Members</dt><dd>{organization.memberCount}</dd></div>

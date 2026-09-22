@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { chip, sevKey, statusChip } from '../../components/chips.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 
 const STATUS_TONE = { Completed: 'ok', Running: 'warn', Failed: 'danger', Cancelled: 'info' };
@@ -43,9 +44,12 @@ export default function AssessmentDetails() {
       <button type="button" className="link back-link" onClick={() => navigate(backPath)}>← Back</button>
       <div className="card app-detail">
         <div className="app-detail__head">
-          <div>
-            <h2>{assessment.id}</h2>
-            <p className="muted">{app?.name} · {app?.url}</p>
+          <div className="app-detail__title">
+            <IconBadge name="assess" />
+            <div>
+              <h2>{assessment.id}</h2>
+              <p className="muted">{app?.name} · {app?.url}</p>
+            </div>
           </div>
           {chip(assessment.status, STATUS_TONE[assessment.status])}
         </div>

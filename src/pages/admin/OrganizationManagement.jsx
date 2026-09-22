@@ -18,7 +18,7 @@ export default function OrganizationManagement() {
                 <td data-label="Members">{o.memberCount}</td>
                 <td data-label="Applications">{o.applicationCount}</td>
                 <td data-label="Created">{o.createdDate}</td>
-                <td data-label="Status">{chip(o.status, o.status === 'Active' ? 'ok' : 'crit')}</td>
+                <td data-label="Status">{chip(o.status, o.status === 'Active' ? 'ok' : 'danger')}</td>
                 <td data-label="Actions">
                   <Link className="btn btn--sm btn--dark-outline" to={`/admin/organizations/${encodeURIComponent(o.name)}`}>View</Link>
                 </td>

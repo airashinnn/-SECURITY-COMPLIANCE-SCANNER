@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { statusChip } from '../../components/chips.jsx';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
 import { useApp } from '../../context/AppContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
@@ -25,9 +26,12 @@ export default function AdminApplicationDetails() {
       <button type="button" className="link back-link" onClick={() => navigate('/admin/applications')}>← Back to Application Management</button>
       <div className="card app-detail">
         <div className="app-detail__head">
-          <div>
-            <h2>{app.name}</h2>
-            <p className="muted">{app.url}</p>
+          <div className="app-detail__title">
+            <IconBadge name="apps" />
+            <div>
+              <h2>{app.name}</h2>
+              <p className="muted">{app.url}</p>
+            </div>
           </div>
           {statusChip(app.status)}
         </div>

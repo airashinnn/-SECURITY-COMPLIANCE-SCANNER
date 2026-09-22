@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
+import IconBadge from '../../components/IconBadge.jsx';
 
 const DURATION_MS = 4000;
 
@@ -46,6 +47,7 @@ export default function AssessmentProgress() {
   if (assessment.status === 'Completed') {
     return (
       <div className="card progress-card">
+        <IconBadge name="check" size={64} tintVar="--ok" />
         <h2>Assessment completed</h2>
         <p className="muted">{assessment.profile} on {app?.name}</p>
         <button type="button" className="btn" onClick={() => navigate(`/app/assessments/${assessment.id}`)}>View results</button>
@@ -56,6 +58,7 @@ export default function AssessmentProgress() {
   if (assessment.status === 'Cancelled') {
     return (
       <div className="card progress-card">
+        <IconBadge name="assess" size={64} tintVar="--info" />
         <h2>Assessment cancelled</h2>
         <button type="button" className="btn btn--ghost" onClick={() => navigate(app ? `/app/applications/${app.id}` : '/app/applications')}>Back</button>
       </div>
@@ -64,6 +67,9 @@ export default function AssessmentProgress() {
 
   return (
     <div className="card progress-card">
+      <div className="progress-spinner">
+        <IconBadge name="assess" size={64} />
+      </div>
       <h2>Running {assessment.profile}</h2>
       <p className="muted">{app?.name} · {app?.url}</p>
       <div className="bar bar--lg" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
