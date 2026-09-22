@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../components/Logo.jsx';
-import { FormField, PasswordField } from '../components/FormField.jsx';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
-import { EMAIL, focusFirstInvalid, nameFromEmail } from '../utils.js';
+import Logo from '../../components/Logo.jsx';
+import { FormField, PasswordField } from '../../components/FormField.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
+import { EMAIL, focusFirstInvalid, nameFromEmail } from '../../utils.js';
 
 const ROLES = [
   { id: 'Owner', label: 'Organization owner' },

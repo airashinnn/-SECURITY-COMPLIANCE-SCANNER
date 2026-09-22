@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import Icon from '../components/Icon.jsx';
-import ConfirmDialog from '../components/ConfirmDialog.jsx';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
+import Icon from '../../components/Icon.jsx';
+import ConfirmDialog from '../../components/ConfirmDialog.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 
 export default function Members() {
   const { user, members, pending, approveMember, declineMember, removeMember } = useApp();

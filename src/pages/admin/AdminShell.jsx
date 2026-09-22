@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import Icon from '../components/Icon.jsx';
-import Logo from '../components/Logo.jsx';
-import { ADMIN_PAGES, ADMIN_SIDE } from '../data/icons.js';
-import { useApp } from '../context/AppContext.jsx';
+import Icon from '../../components/Icon.jsx';
+import Logo from '../../components/Logo.jsx';
+import { ADMIN_PAGES, ADMIN_SIDE } from '../../data/icons.js';
+import { useApp } from '../../context/AppContext.jsx';
 
 export default function AdminShell() {
   const { user, isAdmin, signOut } = useApp();

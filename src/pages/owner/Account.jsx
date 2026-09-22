@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import Icon from '../components/Icon.jsx';
-import { useApp } from '../context/AppContext.jsx';
+import Icon from '../../components/Icon.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 export default function Account() {
   const { user, org, signOut } = useApp();

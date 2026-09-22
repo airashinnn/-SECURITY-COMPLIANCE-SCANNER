@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { statusChip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
+import { statusChip } from '../../components/chips.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 export default function ApplicationDetails() {
   const { appId } = useParams();

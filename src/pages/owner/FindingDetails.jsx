@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { chip, sevKey, statusChip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
+import { chip, sevKey, statusChip } from '../../components/chips.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 
 const STATUSES = ['Open', 'In progress', 'Resolved'];
 

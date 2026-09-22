@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useApp } from '../context/AppContext.jsx';
-import { chip } from '../components/chips.jsx';
-import CategoryBars from '../components/CategoryBars.jsx';
-import ScoreMeter from '../components/ScoreMeter.jsx';
+import { useApp } from '../../context/AppContext.jsx';
+import { chip } from '../../components/chips.jsx';
+import CategoryBars from '../../components/CategoryBars.jsx';
+import ScoreMeter from '../../components/ScoreMeter.jsx';
 
 const SEVERITIES = [
   { label: 'Critical', varName: '--crit' },

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SCAN_PROFILES, ALL_CHECKS } from '../data/scanProfiles.js';
-import { useApp } from '../context/AppContext.jsx';
-import { useToast } from '../context/ToastContext.jsx';
+import { SCAN_PROFILES, ALL_CHECKS } from '../../data/scanProfiles.js';
+import { useApp } from '../../context/AppContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 
 export default function ScanConfiguration() {
   const { appId } = useParams();

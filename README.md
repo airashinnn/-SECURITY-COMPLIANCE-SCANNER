@@ -45,14 +45,20 @@ Applications registered by an Owner start **Pending** and only become scannable 
 
 ```
 src/
-  components/   Reusable UI: icons, form fields, dialogs, confirm dialog, chips, org switcher
-  context/      App state (orgs/apps/assessments/findings/members + admin data) and toast notifications
-  data/         Sample data, scan profile/check definitions, icon/nav config
-  pages/        Owner/Developer route views
-  pages/admin/  System Administrator route views
-  App.jsx       Route table
-  main.jsx      Entry point
+  components/     Reusable UI: icons, form fields, dialogs, confirm dialog, chips, org switcher, charts
+  context/        App state (orgs/apps/assessments/findings/members + admin data) and toast notifications
+  data/           Sample data, scan profile/check definitions, icon/nav config
+  pages/
+    auth/         Public pages: Landing, Sign in, Sign up — no role required
+    owner/        Owner/Developer dashboard (/app/*) — AppShell + its route views
+    admin/        System Administrator dashboard (/admin/*) — AdminShell + its route views
+    shared/       Views reused by more than one role (currently: Assessment details,
+                  mounted at both /app/assessments/:id and /admin/assessments/:id)
+  App.jsx         Route table — the only file that imports across pages/* folders
+  main.jsx        Entry point
 ```
+
+Each role's pages only import from its own folder (plus `components/`, `context/`, `data/`) — `owner/` never reaches into `admin/` or vice versa. `App.jsx` is the single place that wires all three together into routes.
 
 ## Backend integration
 

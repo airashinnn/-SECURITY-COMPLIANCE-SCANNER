@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect, useRef } from 'react';
 import { Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
-import Icon from '../components/Icon.jsx';
-import Logo from '../components/Logo.jsx';
-import OrgSwitcher from '../components/OrgSwitcher.jsx';
-import AddAppDialog from '../components/AddAppDialog.jsx';
-import MoreSheet from '../components/MoreSheet.jsx';
-import { MORE, MORE_DEVELOPER, PAGES, SIDE, SIDE_DEVELOPER, TAB } from '../data/icons.js';
-import { useApp } from '../context/AppContext.jsx';
+import Icon from '../../components/Icon.jsx';
+import Logo from '../../components/Logo.jsx';
+import OrgSwitcher from '../../components/OrgSwitcher.jsx';
+import AddAppDialog from '../../components/AddAppDialog.jsx';
+import MoreSheet from '../../components/MoreSheet.jsx';
+import { MORE, MORE_DEVELOPER, PAGES, SIDE, SIDE_DEVELOPER, TAB } from '../../data/icons.js';
+import { useApp } from '../../context/AppContext.jsx';
 
 const AddAppDialogContext = createContext(() => {});
 export const useOpenAddAppDialog = () => useContext(AddAppDialogContext);

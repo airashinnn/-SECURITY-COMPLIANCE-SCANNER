@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '../components/Icon.jsx';
-import { statusChip } from '../components/chips.jsx';
-import { useApp } from '../context/AppContext.jsx';
+import Icon from '../../components/Icon.jsx';
+import { statusChip } from '../../components/chips.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 import { useOpenAddAppDialog } from './AppShell.jsx';
 
 const STATUSES = ['All', 'Authorized', 'Pending', 'Rejected', 'Revoked'];
