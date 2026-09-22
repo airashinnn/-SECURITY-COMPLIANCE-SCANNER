@@ -14,9 +14,9 @@ export function ShieldDefs() {
           <path d="M10 10h32l6 9h24l6-9h32v62c0 26-24 46-50 62C34 118 10 98 10 72z" />
         </clipPath>
         <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#00ffdd" stopOpacity="0" />
-          <stop offset=".85" stopColor="#00ffdd" stopOpacity=".5" />
-          <stop offset="1" stopColor="#00ffdd" stopOpacity=".9" />
+          <stop offset="0" stopColor="#2dd4bf" stopOpacity="0" />
+          <stop offset=".85" stopColor="#2dd4bf" stopOpacity=".5" />
+          <stop offset="1" stopColor="#2dd4bf" stopOpacity=".9" />
         </linearGradient>
         <symbol id="shield" viewBox="0 0 120 140">
           <g fill="none" stroke="currentColor" strokeLinejoin="round" strokeLinecap="round">

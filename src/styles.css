@@ -1,13 +1,17 @@
 :root{
   color-scheme:dark;
   --bg:#010031;
-  --panel:rgba(8,4,202,.12);
-  --primary:#0a00c6;
-  --primary-hi:#1f17e8;
-  --accent:#008dd9;
-  --mint:#00ffdd;
-  --brand:#4a45ff;          /* Figma: #0804ca — lightened to reach 3:1 contrast on the navy background */
-  --logo:#2f6fa8;
+  /* Brand ramp: one indigo family for primary actions, a sky-blue secondary accent,
+     and teal reserved as the one signature highlight (focus rings, key links) —
+     replaces five previously unrelated blues/purples (primary/accent/mint/brand/logo)
+     that didn't read as one system. */
+  --panel:rgba(79,70,229,.12);
+  --primary:#4f46e5;       /* Indigo 600 */
+  --primary-hi:#4338ca;    /* Indigo 700 — hover */
+  --accent:#0284c7;        /* Sky 600 — secondary interactive (tabs, nav highlight) */
+  --mint:#2dd4bf;          /* Teal 400 — focus rings + the one "signature" link color */
+  --brand:#818cf8;         /* Indigo 400 — large text on the navy background (landing headline) */
+  --logo:#a5b4fc;          /* Indigo 300 — shield icon stroke */
   --paper:#fff;
   --ink:#000;
   --ink-2:#4a4a5c;
@@ -76,7 +80,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .check input{width:20px;height:20px;accent-color:var(--accent)}
 
 /* ---------- Landing ---------- */
-.landing{min-height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:48px;padding:clamp(28px,6vw,64px) clamp(24px,9vw,143px);background:radial-gradient(ellipse 900px 600px at 85% 15%,rgba(0,141,217,.18),transparent 60%),var(--bg)}
+.landing{min-height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:48px;padding:clamp(28px,6vw,64px) clamp(24px,9vw,143px);background:radial-gradient(ellipse 900px 600px at 85% 15%,rgba(2,132,199,.18),transparent 60%),var(--bg)}
 .landing h1{font-size:clamp(42px,7.4vw,64px);font-weight:700;line-height:1.05;letter-spacing:-.02em;color:var(--brand);max-width:6.7em}
 .tagline{color:var(--accent);font-size:clamp(18px,2.6vw,24px);margin-top:28px}
 .lede{color:var(--accent);font-size:clamp(18px,2.6vw,24px);margin-top:16px;max-width:18em}
@@ -89,7 +93,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 @keyframes sweep{from{transform:translateY(0)}to{transform:translateY(176px)}}
 
 /* ---------- Auth ---------- */
-.auth{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(104px + var(--safe-t)) 20px 56px;position:relative;background:radial-gradient(ellipse 700px 480px at 50% -8%,rgba(74,69,255,.22),transparent 60%),var(--bg)}
+.auth{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(104px + var(--safe-t)) 20px 56px;position:relative;background:radial-gradient(ellipse 700px 480px at 50% -8%,rgba(79,70,229,.22),transparent 60%),var(--bg)}
 .corner{position:absolute;left:clamp(12px,3.5vw,52px);top:calc(12px + var(--safe-t));width:clamp(64px,11vw,170px)}
 .corner .logo{width:100%;height:auto}
 .auth__col{width:min(720px,100%)}
@@ -210,7 +214,7 @@ h1:focus,h2:focus,#view:focus{outline:none}
 .app .score div:first-child{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px}
 .app .meta{font-size:13px;color:var(--ink-2);margin-top:8px}
 .add{background:var(--panel);color:#fff;border:2px solid #fff;display:grid;place-items:center;align-content:center;gap:8px;font-size:18px;font-weight:600;cursor:pointer;min-height:200px;text-align:center}
-.add:hover{background:rgba(8,4,202,.28)}
+.add:hover{background:rgba(79,70,229,.28)}
 .add .ico{width:36px;height:36px}
 .chips{display:flex;gap:10px;flex-wrap:wrap}
 .fchip{min-height:44px;padding:0 18px;border-radius:99px;border:1px solid #fff;background:transparent;font-weight:600;cursor:pointer}
