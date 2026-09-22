@@ -6,6 +6,8 @@ import { useApp } from '../context/AppContext.jsx';
 import { useOpenAddAppDialog } from './AppShell.jsx';
 
 const STATUSES = ['All', 'Authorized', 'Pending', 'Rejected', 'Revoked'];
+const STATUS_ACCENT = { Authorized: '--ok', Pending: '--warn', Rejected: '--danger', Revoked: '--info' };
+const scoreVar = score => (score >= 90 ? '--ok' : score >= 70 ? '--warn' : '--danger');
 
 export default function Applications() {
   const { apps, org } = useApp();
@@ -35,14 +37,21 @@ export default function Applications() {
       </div>
       <div className="grid-apps">
         {list.map(x => (
-          <Link className="card app app--link" to={`/app/applications/${x.id}`} key={x.id}>
+          <Link
+            className="card app app--link"
+            to={`/app/applications/${x.id}`}
+            key={x.id}
+            style={{ borderLeft: `4px solid var(${STATUS_ACCENT[x.status]})` }}
+          >
             <div className="app__top"><h3>{x.name}</h3>{statusChip(x.status)}</div>
             <p className="muted">{x.type}</p>
             {x.score != null ? (
               <>
                 <div className="score">
                   <div><span>Security score</span><b>{x.score}/100</b></div>
-                  <div className="bar" role="img" aria-label={`Score ${x.score} out of 100`}><i style={{ width: `${x.score}%` }} /></div>
+                  <div className="bar" role="img" aria-label={`Score ${x.score} out of 100`}>
+                    <i style={{ width: `${x.score}%`, background: `var(${scoreVar(x.score)})` }} />
+                  </div>
                 </div>
                 <p className="meta">Last assessed {x.assessed}</p>
               </>
